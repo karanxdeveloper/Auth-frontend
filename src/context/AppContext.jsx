@@ -19,14 +19,12 @@ export const AppContextProvider = (props)=>{
     const getAuthState = async ()=>{
         try {
             const {data} = await axios.get(backendUrl + '/api/auth/is-auth')
-            console.log(data)
             if(data.success){
                 setIsLoggedIn(true)
                 getUserData()
-                // console.log(userData)
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.message,{position:"top-center"})
         }
     }
 
@@ -35,15 +33,27 @@ export const AppContextProvider = (props)=>{
         try {
             const response =await axios.get(backendUrl + '/api/user/data')
             const data = response.data
-            console.log(data)
-            console.log(data.userData)
             setUserData(data.userData)
-
-            console.log(userData)
         } catch (error) {
-            toast.error(data.message)
+            toast.error(data.message,{position:"top-center"})
         }
     }
+
+
+    const sentVerificationOtp = async ()=>{
+        try {
+            const {data} = await axios.post(backendUrl + "/api/auth/send-verify-otp")
+            if(data.success){
+                navigate('/email-verify')
+                toast.success(data.message,{position:"top-center"})
+            }else{
+                toast.error(data.message,{position:"top-center"})
+            }
+        } catch (error) {
+            toast.error(error.message,{position:"top-center"})
+        }
+    }
+
 
     const logout = async()=>{
         try {
@@ -54,12 +64,12 @@ export const AppContextProvider = (props)=>{
                 setUserData(false)
             }
 
-            toast.success(response.data.message)
+            toast.success(response.data.message,{position:"top-center"})
 
             navigate('/')
             
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.message,{position:"top-center"})
         }
     }
 
@@ -73,7 +83,8 @@ export const AppContextProvider = (props)=>{
         isLoggedIn,setIsLoggedIn,
         userData,setUserData,
         getUserData,getAuthState,
-        logout
+        logout,
+        sentVerificationOtp
     }
 
 

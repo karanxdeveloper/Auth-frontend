@@ -34,8 +34,13 @@ function Login() {
           setIsLoggedIn(true)
           getUserData()
           navigate('/')
+          toast.success(data.message,{
+            position:"top-center"
+          })
         } else {
-          toast.error(data.message)
+          toast.error(data.message, {
+            position:"top-center"
+          })
         }
       } else {
         const { data } = await axios.post(backendUrl + '/api/auth/login',
@@ -45,13 +50,15 @@ function Login() {
           setIsLoggedIn(true)
           getUserData()
           navigate('/')
-          toast.success(data.message)
+          toast.success(data.message, {
+            position:"top-center"
+          })
         } else {
-          toast.error(data.message)
+          toast.error(data.message,{position:"top-center"})
         }
       }
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message,{position:"top-center"})
     }
   }
 

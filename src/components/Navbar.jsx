@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { assets } from "../assets/assets"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AppContext } from "../context/AppContext"
 
 
@@ -8,7 +8,7 @@ function Navbar() {
 
   const navigate = useNavigate()
   const [menuToggle, setMenuToggle] = useState(false)
-  const { userData, backendUrl, setUserData, setIsLoggedIn, logout } = useContext(AppContext)
+  const { userData, backendUrl, setUserData, setIsLoggedIn, logout, sentVerificationOtp} = useContext(AppContext)
 
   return (
     <div className="w-full flex justify-between items-center p-4 sm:p-6 sm:px-24 absolute top-0">
@@ -23,7 +23,7 @@ function Navbar() {
           rounded pt-10`}>
             <ul className="list-none w-[15vw] m-0 p-4 bg-gray-100 rounded-xl text-sm">
               {!userData.isAccountVerified &&
-                <li className="py-2 px-2 text-[18px] rounded-xl  hover:bg-gray-200 cursor-pointer">Verify Email</li>
+                <li onClick={()=>sentVerificationOtp()} className="py-2 px-2 text-[18px] rounded-xl  hover:bg-gray-200 cursor-pointer">Verify Email</li>
               }
               <li onClick={() => logout()} className="py-2 px-2 text-[18px] rounded-xl hover:bg-gray-200 cursor-pointer pr-10">Logout</li>
             </ul>
